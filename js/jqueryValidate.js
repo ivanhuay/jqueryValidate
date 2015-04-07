@@ -8,7 +8,9 @@
 	}
 	validateH.prototype={
 		default:{
-			lang:"es"
+			lang:"es",
+			callback:function (input){},
+			validCallback:function (input){}
 		},
 		mensages:{
 			es:{
@@ -40,11 +42,13 @@
 							valido = false;
 							if(!$("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
 								$("<p id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].required+"</p>").insertAfter($(this));
-								
+								paso.config.callback(this);
 							}
 						}else{
 							if($("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
 								$("#"+$(this).prop("name")+"_error_"+valtype[i]).remove();
+								paso.config.validCallback(this);
+								
 							}
 						}
 						
@@ -54,11 +58,13 @@
 							valido = false;
 							if(!$("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
 								$("<p id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].email+"</p>").insertAfter($(this));
+								paso.config.callback(this);
 								
 							}
 						}else{
 							if($("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
 								$("#"+$(this).prop("name")+"_error_"+valtype[i]).remove();
+								paso.config.validCallback(this);
 							}
 						}
 						
@@ -70,11 +76,14 @@
 							valido = false;
 							if(!$("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
 								$("<p id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].match+"</p>").insertAfter($(this));
+								paso.config.callback(this);
 								
 							}
 						}else{
 							if($("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
 								$("#"+$(this).prop("name")+"_error_"+valtype[i]).remove();
+								paso.config.validCallback(this);
+
 							}
 						}
 						
@@ -86,11 +95,14 @@
 							valido = false;
 							if(!$("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
 								$("<p id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].minlength.replace("%s",thislenght)+"</p>").insertAfter($(this));
+								paso.config.callback(this);
 								
 							}
 						}else{
 							if($("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
 								$("#"+$(this).prop("name")+"_error_"+valtype[i]).remove();
+								paso.config.validCallback(this);
+
 							}
 						}
 						
