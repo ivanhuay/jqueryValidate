@@ -10,7 +10,10 @@
 		default:{
 			lang:"es",
 			callback:function (input){},
-			validCallback:function (input){}
+			validCallback:function (input){},
+			success:function (data){
+
+			}
 		},
 		mensages:{
 			es:{
@@ -32,6 +35,7 @@
 			this.config=$.extend({},this.default,opciones);
 			valido = true;
 			var paso = this;//para no entrar en conflicto dentro del .each
+			var successData = "";
 			select.find('input,textarea,select').filter('[data-validation]').each(function (index){
 				
 				var data_validation = $(this).attr("data-validation");
@@ -107,12 +111,22 @@
 						}
 						
 					}
+					if(valido){
+
+						var amp = (successData.length>1)?"&":"";
+						successData+=amp+$(this).attr("name")+"="+$(this).val()+"";
+					}else{
+						successData="";
+					}
 					
 				}
 			});
 			if(select.is("form") && valido ){
 				select.submit()
+			}else if(valido){
+				paso.config.success(successData);
 			}
+
 			//return valido;
 			
 
