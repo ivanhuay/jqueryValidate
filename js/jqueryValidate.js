@@ -35,16 +35,12 @@
 		},
 		clean:function(){
 			var select = this.selector;
-			select.find('input,textarea,select').filter('[data-validation]').each(function (index){
-				var data_validation = $(this).attr("data-validation");
-				var valtype = data_validation.split(" ");
-				for(var i in valtype){
-					$("#"+$(this).prop("name")+"_error_"+valtype[i]).remove();
-				}
+			select.find('.data_validation_error').each(function (index){
+				$(this).remove();
 			});
 		},
 		init:function(select,opciones){
-			if(typeof opciones.success == "function")this.default.successEnable=true;
+			if(typeof opciones != "undefined" && typeof opciones.success == "function")this.default.successEnable=true;
 			this.config=$.extend({},this.default,opciones);
 
 			valido = true;
@@ -59,7 +55,7 @@
 						if($(this).val()=="" || $(this).val()==false){
 							valido = false;
 							if(!$("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
-								$("<p id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].required+"</p>").insertAfter($(this));
+								$("<p class='data_validation_error' id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].required+"</p>").insertAfter($(this));
 								paso.config.callback(this);
 							}
 						}else{
@@ -75,7 +71,7 @@
 						if(!paso.validateEmail($(this).val())){
 							valido = false;
 							if(!$("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
-								$("<p id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].email+"</p>").insertAfter($(this));
+								$("<p class='data_validation_error' id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].email+"</p>").insertAfter($(this));
 								paso.config.callback(this);
 								
 							}
@@ -93,7 +89,7 @@
 						if(! ( $(this).val() == $("#"+match_id).val() ) ){
 							valido = false;
 							if(!$("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
-								$("<p id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].match+"</p>").insertAfter($(this));
+								$("<p class='data_validation_error' id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].match+"</p>").insertAfter($(this));
 								paso.config.callback(this);
 								
 							}
@@ -112,7 +108,7 @@
 						if(! ( $(this).val().length >= thislenght ) && $(this).val()!="" ){
 							valido = false;
 							if(!$("#"+$(this).prop("name")+"_error_"+valtype[i]).length){
-								$("<p id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].minlength.replace("%s",thislenght)+"</p>").insertAfter($(this));
+								$("<p class='data_validation_error' id='"+$(this).prop("name")+"_error_"+valtype[i]+"' style='color:red'>"+paso.mensages[paso.config.lang].minlength.replace("%s",thislenght)+"</p>").insertAfter($(this));
 								paso.config.callback(this);
 								
 							}
@@ -176,4 +172,4 @@
 		return this;
 	}
 	window.validate=validateH;
-})(jQuery,window)
+})(jQuery,window);
