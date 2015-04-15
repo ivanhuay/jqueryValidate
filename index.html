@@ -59,7 +59,7 @@
 	$(function(){
 		$("#submit").on("click",function (e){
 			e.preventDefault();
-			$("#test").validate({
+			$("#mainForm").validate({
 				callback:function(input){
 					$(input).parent("form-control").addClass("has-error");
 				},

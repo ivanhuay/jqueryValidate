@@ -1,6 +1,8 @@
 ;(function($,window,undefined){
 	var validateH=function(selector,opciones){
 		//tengo que declarar las variables q me interesan
+		
+		this.selector = selector;
 		if(this.init)
 		{
 			this.init(selector,opciones);
@@ -11,6 +13,7 @@
 			lang:"es",
 			callback:function (input){},
 			validCallback:function (input){},
+			successEnable:false,
 			success:function (data){
 
 			}
@@ -30,9 +33,20 @@
 		validate:function(){
 
 		},
-
+		clean:function(){
+			var select = this.selector;
+			select.find('input,textarea,select').filter('[data-validation]').each(function (index){
+				var data_validation = $(this).attr("data-validation");
+				var valtype = data_validation.split(" ");
+				for(var i in valtype){
+					$("#"+$(this).prop("name")+"_error_"+valtype[i]).remove();
+				}
+			});
+		},
 		init:function(select,opciones){
+			if(typeof opciones.success == "function")this.default.successEnable=true;
 			this.config=$.extend({},this.default,opciones);
+
 			valido = true;
 			var paso = this;//para no entrar en conflicto dentro del .each
 			var successData = "";
@@ -122,7 +136,12 @@
 				}
 			});
 			if(select.is("form") && valido ){
-				select.submit()
+				if(paso.config.successEnable){
+					paso.config.success(successData);
+				}else{
+					select.submit()
+				}
+
 			}else if(valido){
 				paso.config.success(successData);
 			}

@@ -1,8 +1,8 @@
 # jqueryValidate
 This jQuery plugin makes simple clientside form validation easy
 
-how to use
-=================
+##how to use
+
 bootstrap implementation example
 
 	<form id="mainForm" action="#">
@@ -41,3 +41,48 @@ javascript code:
 			$("#mainForm").validate();
 		});
 	</script>
+
+
+##features recently added
+
+###success function
+success function parameter to handle the callback after validation
+the success function recives as parameter the serialized data
+
+####example:
+
+```javascript
+$("#mainForm").validate({
+	success:function(data){
+		console.log(data);
+	}
+	});
+```
+
+###callback & validCallback functions
+
+function to customise de validation callbacks, recive as parameters each input
+
+####example
+```javascript
+$("#mainForm").validate({
+	success:function(data){
+		console.log(data);
+	},
+	callback:function(input){
+		alert("Error: "+input.val()+" wrong parameter");
+	},
+	validCallback:function(input){
+		alert("Dara: "+input.val()+" Acepted");
+	},
+});
+```
+###clean function
+
+function to clean al error in form or input
+ 
+####example
+```javascript
+$("#mainForm").validate('clean');
+```
+
